@@ -21,6 +21,10 @@ AZURE_ENDPOINT = os.getenv("AZURE_API_ENDPOINT")  # e.g., https://your-resource.
 AZURE_API_VERSION = os.getenv("AZURE_API_VERSION")  # e.g., 2024-05-01
 AZURE_DEPLOYMENT_ID=os.getenv("AZURE_DEPLOYMENT_ID")
 
+@app.route("/", methods=["GET"])
+def home():
+    return "✅ Backend is running!", 200
+
 
 # ------------------ Register Route ------------------
 @app.route("/register", methods=["POST"])
