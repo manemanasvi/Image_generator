@@ -1,219 +1,79 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>X Generator - Image Generator</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    input:-webkit-autofill,
-    input:-webkit-autofill:focus {
-      box-shadow: 0 0 0px 1000px #1f2937 inset !important;
-      -webkit-text-fill-color: #fff !important;
-    }
-  </style>
-</head>
-<body class="bg-gradient-to-r from-gray-900 to-black min-h-screen text-white">
 
-  <!-- Header 
-  <div class="flex justify-between items-start px-6 py-4">
-    <div>
-      <div id="welcomeText" class="text-lg font-semibold mb-2"></div>
-
-      <button onclick="toggleGallery()" 
-        class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-md shadow-md transition font-semibold">
-        My Gallery
-      </button>
-    </div>
-
-    <button onclick="logout()" class="bg-red-600 px-4 py-2 rounded-md hover:bg-red-500 transition mt-1">
-      Logout
-    </button>
-  </div>
-
-  <!-- Generator Section 
-  <div class="flex flex-col items-center justify-center text-center px-4">
-    <div class="bg-white bg-opacity-10 backdrop-blur-lg p-8 rounded-xl shadow-xl w-full max-w-md border border-gray-700">
-      <h2 class="text-3xl font-bold mb-4">X <span class="text-blue-400">Generator</span></h2>
-      <p class="text-gray-300 mb-4">Generate AI-powered images</p>
-
-      <input type="text" id="promptInput" placeholder="Enter a prompt..."
-        class="w-full p-3 rounded-md border border-gray-700 bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3">
-
-      <button onclick="generateImage()"
-        class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-500 transition font-semibold shadow-md">
-        Generate Image
-      </button>
-
-      <div id="loader" class="hidden flex flex-col items-center mt-4">
-        <div class="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500"></div>
-        <p class="mt-2 text-gray-300">Generating your image...</p>
-      </div>
-
-      <div id="imageContainer" class="mt-4 hidden">
-        <img id="generatedImage" src="" alt="Generated Image"
-          class="w-full rounded-md border border-gray-700 shadow-md">
-      </div>
-    </div>
-  </div>
-
-  <!-- Floating Gallery Section 
-  <div id="gallerySection" class="hidden fixed top-[100px] left-6 w-72 max-h-[300px] overflow-y-auto bg-gray-800 bg-opacity-80 backdrop-blur-md p-4 rounded-lg shadow-lg border border-gray-600">
-    <h2 class="text-lg font-bold mb-2 text-white">🖼️ My Gallery</h2>
-    <div id="gallery" class="grid grid-cols-3 gap-2"></div>
-  </div>
-
-  <!-- Script
-  <script>
-    const username = localStorage.getItem("username");
-    if (!username) {
-      window.location.href = "login.html";
-    } else {
-      document.getElementById("welcomeText").textContent = "Welcome, " + username + "!";
-    }
-
-    function logout() {
-      localStorage.removeItem("username");
-      window.location.href = "login.html";
-    }
-
-    function toggleGallery() {
-      const section = document.getElementById("gallerySection");
-      section.classList.toggle("hidden");
-    }
-
-    function generateImage() {
-      const prompt = document.getElementById("promptInput").value;
-      if (!prompt) {
-        alert("Please enter a prompt!");
-        return;
-      }
-
-      document.getElementById("loader").classList.remove("hidden");
-      document.getElementById("imageContainer").classList.add("hidden");
-
-      fetch("http://127.0.0.1:5000/generate-image", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, username })
-      })
-      .then(response => response.json())
-      .then(data => {
-  console.log(" Response from /generate-image:", data);
-
-  if (data.image_url) {
-    document.getElementById("generatedImage").src = data.image_url;
-    console.log("getting the url")
-    document.getElementById("imageContainer").classList.remove("hidden");
-    console.log("hidden image")
-
-    const gallery = document.getElementById("gallery");
-    console.log("gallery")
-    const img = document.createElement("img");
-    console.log("images")
-    img.src = data.image_url;
-    img.alt = "Generated";
-    img.classList.add("w-full", "h-24", "rounded-md", "shadow", "object-cover");
-    gallery.prepend(img);
-  } else {
-    alert("Image generation failed!");
-  }
-})
-      .catch((error) => {
-        console.error("Generation error:", error);
-        alert("Something went wrong!");
-      })
-      .finally(() => {
-        document.getElementById("loader").classList.add("hidden");
-      });
-    }
-
-    // Load saved images into gallery on page load
-   fetch("http://127.0.0.1:5000/get-images", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ username })
-})
-.then(response => response.json())
-.then(data => {
-  const gallery = document.getElementById("gallery");
-  if (Array.isArray(data.images)) {
-   data.images.forEach(url => {
-  const link = document.createElement("a");
-  link.href = url;
-  link.target = "_blank"; // ✅ open full image in new tab
-
-  const img = document.createElement("img");
-  img.src = url;
-  img.alt = "Saved Image";
-  img.classList.add("w-full", "h-24", "rounded-md", "shadow", "object-cover");
-
-  link.appendChild(img);
-  gallery.appendChild(link);
-});
-  }
-})
-    .catch(err => {
-      console.error("Gallery load error:", err);
-    });
-  </script>
-
-</body>
-</html> -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>X Generator – AI Image Generator</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="generator.css" />
   <script defer src="image_generator.js"></script>
+  <style>
+    body {
+      background: linear-gradient(to right top, #edf2f7, #c3dafe, #a5b4fc, #818cf8);
+    }
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+      -webkit-text-fill-color: #000 !important;
+      transition: background-color 9999s ease-in-out 0s;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-tr from-gray-900 via-blue-900 to-black text-white min-h-screen flex flex-col">
-
+<body class="min-h-screen flex flex-col text-gray-900 font-sans">
   <!-- Header -->
-  <header class="w-full p-6 flex justify-between items-center bg-black bg-opacity-50 backdrop-blur shadow-md">
-    <h1 class="text-lg font-semibold tracking-wide">👋 Welcome, <span id="welcomeText"></span></h1>
+  <header class="w-full p-6 flex justify-between items-center bg-white bg-opacity-70 backdrop-blur-sm shadow">
+    <h1 class="text-lg font-semibold tracking-wide">
+      👋 Welcome, <span id="welcomeText"></span>
+    </h1>
     <div class="flex gap-4">
-      <button onclick="toggleGallery()" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-md font-semibold shadow">My Gallery</button>
-      <button onclick="logout()" class="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-md font-semibold shadow">Logout</button>
+      <a href="gallery.html"
+   class="bg-blue-500 hover:bg-blue-400 px-4 py-2 rounded-md text-white font-semibold shadow">
+  My Gallery
+</a>
+
+      <button onclick="logout()" class="bg-red-500 hover:bg-red-400 px-4 py-2 rounded-md text-white font-semibold shadow">Logout</button>
     </div>
   </header>
 
-  <!-- Main Prompt Section -->
-  <main class="flex-grow flex flex-col items-center justify-center px-4 py-10">
-    <div class="bg-white bg-opacity-10 backdrop-blur-lg border border-gray-700 p-8 rounded-2xl max-w-md w-full shadow-xl">
-      <h2 class="text-3xl font-extrabold mb-2 text-center text-cyan-400">🪄 X Generator</h2>
-      <p class="text-sm text-center text-gray-300 mb-6">Type a prompt and generate AI-powered images</p>
+  <!-- Generator Section -->
+  <main class="flex-grow flex items-center justify-center p-6">
+    <div class="glass-card p-8 rounded-2xl max-w-md w-full shadow-xl border border-gray-200">
+      <h2 class="text-3xl font-extrabold mb-2 text-center text-indigo-600">✨ X Generator</h2>
+      <p class="text-sm text-center text-gray-700 mb-6">Type a prompt and generate AI-powered images</p>
 
       <input id="promptInput" type="text" placeholder="Describe your image..."
-             class="w-full p-3 mb-4 rounded-md bg-gray-900 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+             class="w-full p-3 mb-4 rounded-md bg-white border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
 
       <button onclick="generateImage()"
-              class="w-full py-3 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 font-semibold rounded-lg shadow-lg transition">
+              class="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-400 hover:from-indigo-600 hover:to-purple-500 text-white font-semibold rounded-lg shadow-lg transition">
         ✨ Generate Image
       </button>
 
       <div id="loader" class="hidden flex flex-col items-center mt-6">
-        <div class="animate-spin h-8 w-8 border-4 border-blue-400 border-t-transparent rounded-full"></div>
-        <p class="mt-2 text-sm text-gray-300">Generating image...</p>
+        <div class="animate-spin h-8 w-8 border-4 border-indigo-400 border-t-transparent rounded-full"></div>
+        <p class="mt-2 text-sm text-gray-600">Generating image...</p>
       </div>
 
       <div id="imageContainer" class="mt-6 hidden">
         <img id="generatedImage" src="" alt="Generated Image"
-             class="w-full rounded-lg border border-gray-700 shadow-md">
+             class="w-full rounded-lg border border-gray-300 shadow-md">
       </div>
     </div>
   </main>
 
   <!-- Gallery Sidebar -->
   <aside id="gallerySection"
-         class="hidden fixed top-24 left-6 w-80 max-h-[400px] overflow-y-auto bg-gray-900 bg-opacity-90 p-4 rounded-xl shadow-xl border border-cyan-500 z-50">
-    <h2 class="text-lg font-bold text-cyan-400 mb-3"> My Gallery</h2>
+         class="hidden fixed top-24 left-6 w-80 max-h-[400px] overflow-y-auto bg-white bg-opacity-80 p-4 rounded-xl shadow-xl border border-indigo-200 z-50">
+    <h2 class="text-lg font-bold text-indigo-500 mb-3">🖼️ My Gallery</h2>
     <div id="gallery" class="grid grid-cols-3 gap-2"></div>
   </aside>
-
 </body>
 </html>
+

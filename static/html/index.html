@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login – X Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(to right top, #edf2f7, #c3dafe, #a5b4fc, #818cf8);
+    }
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+      -webkit-text-fill-color: #000 !important;
+      transition: background-color 9999s ease-in-out 0s;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    }
+  </style>
+  <script defer src="index.js"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center text-gray-900 font-sans">
+  <div class="w-full max-w-sm p-8 rounded-xl glass-card">
+    <h1 class="text-3xl font-bold text-center mb-6 tracking-wider">
+      🔐 Login to <span class="text-indigo-600">X Generator</span>
+    </h1>
+    <form id="loginForm" class="space-y-4">
+      <input type="email" id="email" placeholder="Email"
+             class="w-full p-3 rounded bg-white text-gray-900 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+             required />
+      <input type="password" id="password" placeholder="Password"
+             class="w-full p-3 rounded bg-white text-gray-900 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+             required />
+      <button type="submit"
+              class="w-full py-3 font-semibold text-lg rounded bg-gradient-to-r from-indigo-500 to-purple-400 text-white hover:from-indigo-600 hover:to-purple-500 transition">
+        Login
+      </button>
+    </form>
+    <p class="mt-6 text-sm text-center text-gray-600">
+      Don’t have an account?
+      <a href="register.html" class="text-indigo-600 hover:underline font-medium">Register here</a>
+    </p>
+    <div id="loginToast" class="mt-4 hidden text-sm font-semibold text-center"></div>
+  </div>
+</body>
+</html>

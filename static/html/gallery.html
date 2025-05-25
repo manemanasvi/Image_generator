@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Gallery – X Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="gallery.js"></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #f0f4ff, #e0e7ff);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-gray-900 font-sans">
+  <!-- Header -->
+  <header class="w-full p-6 flex justify-between items-center bg-white shadow-md">
+    <h1 class="text-xl font-bold text-indigo-600">🖼️ My Gallery</h1>
+    <button onclick="window.location.href='image_generator.html'"
+            class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-400 font-semibold">← Back to Generator</button>
+  </header>
+
+  <!-- Gallery Section -->
+  <main class="p-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="galleryContainer">
+      <!-- Images will be injected here -->
+    </div>
+  </main>
+</body>
+</html>

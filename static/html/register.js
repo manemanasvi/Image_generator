@@ -33,7 +33,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     if (res.status === 201) {
       toast.textContent = "✅ Registered successfully! Redirecting...";
       toast.classList.add("text-green-400");
-      setTimeout(() => window.location.href = "login.html", 1500);
+      setTimeout(() => window.location.href = "index.html", 1500);
     } else {
       toast.textContent = `❌ ${data.error || "Registration failed"}`;
       toast.classList.add("text-red-500");

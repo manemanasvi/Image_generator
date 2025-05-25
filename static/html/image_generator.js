@@ -1,13 +1,13 @@
 const username = localStorage.getItem("username");
 if (!username) {
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 } else {
   document.getElementById("welcomeText").textContent = username;
 }
 
 function logout() {
   localStorage.removeItem("username");
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 }
 
 function toggleGallery() {
@@ -15,13 +15,13 @@ function toggleGallery() {
 }
 
 function generateImage() {
-  const prompt = document.getElementById("promptInput").value;
+  const prompt = document.getElementById("promptInput").value.trim();
   if (!prompt) return alert("Please enter a prompt!");
 
   document.getElementById("loader").classList.remove("hidden");
   document.getElementById("imageContainer").classList.add("hidden");
 
-  fetch("http://127.0.0.1:5000/generate-image", {
+  fetch("http://localhost:5000/generate-image", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt, username })
@@ -55,7 +55,7 @@ function generateImage() {
 }
 
 // Load user's saved images on page load
-fetch("http://127.0.0.1:5000/get-images", {
+fetch("http://localhost:5000/get-images", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ username })
