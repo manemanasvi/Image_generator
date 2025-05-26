@@ -21,6 +21,8 @@ load_dotenv() # Load environment variables from .env file (for local development
 
 # Get the MongoDB connection URI from environment variables
 MONGO_URI = os.getenv("MONGO_URI")
+print(MONGO_URI)
+
 
 if not MONGO_URI:
     raise ValueError("No MONGO_URI found in environment variables. Please set it.")
