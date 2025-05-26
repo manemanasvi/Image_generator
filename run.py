@@ -59,10 +59,8 @@ def register():
 
 
 # ------------------ Login Route ------------------
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["POST"])
 def login():
-    if request.method == "GET":
-        return "Login endpoint - send POST request with JSON", 200
     try:
         data = request.json
         email = data.get("email")
