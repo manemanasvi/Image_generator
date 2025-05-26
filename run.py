@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
-from database import users_collection
+from database import users_collection # Assuming 'database' module is correctly set up
 import os
 import requests
 import time
@@ -13,20 +13,24 @@ load_dotenv()
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
-CORS(app, resources={r"/*": {"origins": "https://image-generator-peach-three.vercel.app/"}})
+
+# FIX: Removed the trailing slash from the Vercel origin URL
+CORS(app, resources={r"/*": {"origins": "https://image-generator-peach-three.vercel.app"}})
 
 # Azure OpenAI credentials
 AZURE_API_KEY = os.getenv("AZURE_API_KEY")
 AZURE_ENDPOINT = os.getenv("AZURE_API_ENDPOINT")  # e.g., https://your-resource.openai.azure.com/
 AZURE_API_VERSION = os.getenv("AZURE_API_VERSION")  # e.g., 2024-05-01
-AZURE_DEPLOYMENT_ID=os.getenv("AZURE_DEPLOYMENT_ID")
+AZURE_DEPLOYMENT_ID = os.getenv("AZURE_DEPLOYMENT_ID")
 
 @app.route("/", methods=["GET"])
 def home():
     return "✅ Backend is running!", 200
 
 
-# ------------------ Register Route ------------------
+
+## Register Route
+
 @app.route("/register", methods=["POST"])
 def register():
     try:
@@ -58,7 +62,9 @@ def register():
         return jsonify({"error": str(e)}), 500
 
 
-# ------------------ Login Route ------------------
+
+## Login Route
+
 @app.route("/login", methods=["POST"])
 def login():
     try:
@@ -77,7 +83,6 @@ def login():
         if bcrypt.check_password_hash(user["password"], password):
             print(f"✅ Login successful: {email}")
             print(f"🧠 Sending username: {user.get('username')}")
-
             return jsonify({"message": "Login successful!", "username": user["username"]}), 200
         else:
             return jsonify({"error": "Invalid password!"}), 401
@@ -87,14 +92,15 @@ def login():
         return jsonify({"error": str(e)}), 500
 
 
-# ------------------ Image Generation (Azure DALL·E 3) ------------------
+
+## Image Generation (Azure DALL·E 3)
+
 @app.route("/generate-image", methods=["POST"])
 def generate_image():
     try:
         data = request.json
         prompt = data.get("prompt")
         username = data.get("username")
-
 
         if not prompt:
             return jsonify({"error": "Prompt is required!"}), 400
@@ -124,13 +130,12 @@ def generate_image():
 
         # Save to MongoDB
         print("🧠 Received username:", username)
-        
+
         result = users_collection.update_one(
             {"username": username},
             {"$push": {"images": image_url}}
         )
         print("📦 MongoDB modified count:", result.modified_count)
-
 
         print(f"✅ Returning image URL to frontend: {image_url}")
         return jsonify({"image_url": image_url}), 200
@@ -141,7 +146,8 @@ def generate_image():
 
 
 
-# ------------------ Get Saved Images ------------------
+## Get Saved Images
+
 @app.route("/get-images", methods=["POST"])
 def get_images():
     try:
@@ -163,8 +169,9 @@ def get_images():
         return jsonify({"error": str(e)}), 500
 
 
-# ------------------ App Start ------------------
+
+## App Start
+
 if __name__ == "__main__":
-    # app.run(debug=True)
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
