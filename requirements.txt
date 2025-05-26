@@ -4,4 +4,3 @@ flask-bcrypt
 pymongo
 requests
 python-dotenv
-gunicorn
