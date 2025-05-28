@@ -49,7 +49,7 @@
 //   })
 //   .catch(err => console.error("Error loading gallery:", err)); 
 // Define your backend base URL
-const BACKEND_BASE_URL = "https://image-generator-oyev.onrender.com"; // <-- THIS IS THE KEY CHANGE
+const BACKEND_BASE_URL = "https://image-generator-wc8p.onrender.com"; // <-- THIS IS THE KEY CHANGE
 
 // Function to display toast messages (assuming a toast element with this ID in gallery.html)
 function showToast(message, type = "error") {

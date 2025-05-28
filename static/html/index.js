@@ -35,7 +35,7 @@
 // Define your backend base URL
 // It's good practice to define this as a constant at the top of your file
 // or even better, as a global configuration variable if you have many API calls.
-const BACKEND_BASE_URL = "https://image-generator-oyev.onrender.com";
+const BACKEND_BASE_URL = "https://image-generator-wc8p.onrender.com";
 
 document.getElementById("loginForm").addEventListener("submit", function (e) {
   e.preventDefault();

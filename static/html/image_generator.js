@@ -82,7 +82,7 @@
 //   .catch(err => console.error("Gallery load error:", err));
 
 // Define your backend base URL
-const BACKEND_BASE_URL = "https://image-generator-oyev.onrender.com";
+const BACKEND_BASE_URL = "https://image-generator-wc8p.onrender.com";
 
 // Function to display toast messages
 function showToast(message, type = "error") {
