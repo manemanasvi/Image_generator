@@ -15,7 +15,7 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 # FIX: Removed the trailing slash from the Vercel origin URL
-CORS(app, resources={r"/*": {"origins": "https://image-generator-peach-three.vercel.app"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Azure OpenAI credentials
 AZURE_API_KEY = os.getenv("AZURE_API_KEY")
