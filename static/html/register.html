@@ -1,4 +1,4 @@
-
+<!-- 
 
 
 <!DOCTYPE html>
@@ -58,4 +58,103 @@
   </div>
 </body>
 </html>
+ !-->
 
+
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register – X Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(to right top, #edf2f7, #c3dafe, #a5b4fc, #818cf8);
+    }
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+      -webkit-text-fill-color: #000 !important;
+      transition: background-color 9999s ease-in-out 0s;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    }
+  </style>
+  <script defer src="register.js"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center text-gray-900 font-sans">
+  <div class="w-full max-w-sm p-8 rounded-xl glass-card">
+    <h1 class="text-3xl font-bold text-center mb-6 tracking-wider">
+      📝 Join <span class="text-indigo-600">X Generator</span>
+    </h1>
+    <form id="registerForm" class="space-y-4">
+      <input type="text" id="username" placeholder="Username"
+             class="w-full p-3 rounded bg-white text-gray-900 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+             required />
+      <input type="email" id="email" placeholder="Email Address"
+             class="w-full p-3 rounded bg-white text-gray-900 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+             required />
+      <!-- Password Field with Eye -->
+<!-- Password Field with Eye Toggle -->
+<div class="relative">
+  <input type="password" id="password" placeholder="Password"
+         class="w-full p-3 pr-10 rounded bg-white text-gray-900 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+         required />
+  <button type="button" onclick="togglePassword('password', this)"
+          class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-indigo-600">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+    </svg>
+  </button>
+</div>
+
+<!-- Confirm Password Field -->
+<div class="relative">
+  <input type="password" id="confirmPassword" placeholder="Confirm Password"
+         class="w-full p-3 pr-10 rounded bg-white text-gray-900 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+         required />
+  <button type="button" onclick="togglePassword('confirmPassword', this)"
+          class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-indigo-600">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+    </svg>
+  </button>
+</div>
+
+
+      <!-- Register Button -->
+      <button id="registerBtn" type="submit"
+              class="w-full py-3 font-semibold text-lg rounded bg-gradient-to-r from-indigo-500 to-purple-400 text-white hover:from-indigo-600 hover:to-purple-500 transition">
+        Register
+      </button>
+
+      <!-- Loader -->
+      <div id="loader" class="hidden flex justify-center mt-3">
+        <svg class="animate-spin h-6 w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+        </svg>
+      </div>
+    </form>
+
+    <p class="mt-6 text-sm text-center text-gray-600">
+      Already have an account?
+      <a href="index.html" class="text-indigo-600 hover:underline font-medium">Login here</a>
+    </p>
+
+    <div id="registerToast" class="mt-4 hidden text-sm font-semibold text-center"></div>
+  </div>
+</body>
+</html>

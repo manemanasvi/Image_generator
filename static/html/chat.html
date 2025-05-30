@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💬 My Chat – X Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="dashboard.css" />
+  <style>
+    body {
+      background: linear-gradient(to right top, #edf2f7, #c3dafe, #a5b4fc, #818cf8);
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex text-gray-800 font-sans">
+
+  <!-- Sidebar -->
+  <div id="include-sidebar"></div>
+
+  <!-- Chat Content -->
+  <main class="ml-64 w-full flex flex-col justify-between p-6">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-6">💬 Chat with X Generator</h1>
+
+    <div id="messages" class="flex flex-col space-y-3 p-4 glass h-[65vh] overflow-y-auto mb-6"></div>
+
+    <form id="chatForm" class="flex items-center space-x-4">
+      <input id="messageInput"
+             type="text"
+             placeholder="Type your message..."
+             class="flex-1 p-3 rounded-lg bg-white text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+             required />
+      <button type="submit"
+              class="px-5 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white rounded-lg font-semibold shadow">
+        Send
+      </button>
+    </form>
+  </main>
+
+  <script src="sidebar.js" defer></script>
+  <script src="chat.js" defer></script>
+</body>
+</html>

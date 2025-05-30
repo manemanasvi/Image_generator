@@ -25,7 +25,7 @@ AZURE_DEPLOYMENT_ID = os.getenv("AZURE_DEPLOYMENT_ID")
 
 @app.route("/", methods=["GET"])
 def home():
-    return "✅ Backend is running!", 200
+    return "✅ Backend is running!", 200 
 
 
 

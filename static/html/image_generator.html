@@ -27,19 +27,22 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col text-gray-900 font-sans">
+  <!-- Sidebar -->
+<div id="include-sidebar"></div>
+
   <!-- Header -->
   <header class="w-full p-6 flex justify-between items-center bg-white bg-opacity-70 backdrop-blur-sm shadow">
     <h1 class="text-lg font-semibold tracking-wide">
       👋 Welcome, <span id="welcomeText"></span>
     </h1>
-    <div class="flex gap-4">
+    <!-- <div class="flex gap-4">
       <a href="gallery.html"
    class="bg-blue-500 hover:bg-blue-400 px-4 py-2 rounded-md text-white font-semibold shadow">
   My Gallery
 </a>
 
       <button onclick="logout()" class="bg-red-500 hover:bg-red-400 px-4 py-2 rounded-md text-white font-semibold shadow">Logout</button>
-    </div>
+    </div> -->
   </header>
 
   <!-- Generator Section -->
@@ -69,11 +72,13 @@
   </main>
 
   <!-- Gallery Sidebar -->
-  <aside id="gallerySection"
+  <!-- <aside id="gallerySection"
          class="hidden fixed top-24 left-6 w-80 max-h-[400px] overflow-y-auto bg-white bg-opacity-80 p-4 rounded-xl shadow-xl border border-indigo-200 z-50">
     <h2 class="text-lg font-bold text-indigo-500 mb-3">🖼️ My Gallery</h2>
     <div id="gallery" class="grid grid-cols-3 gap-2"></div>
-  </aside>
+  </aside> -->
+  <script src="sidebar.js" defer></script>
+
 </body>
 </html>
 
