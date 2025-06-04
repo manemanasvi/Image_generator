@@ -174,6 +174,7 @@ def get_images():
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
     
+    
 @app.route("/chat", methods=["POST"])
 def chat_with_bot():
     try:
