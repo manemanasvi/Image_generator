@@ -1,11 +1,13 @@
 const BACKEND_BASE_URL = window.env.BACKEND_BASE_URL;
 
-
 document.addEventListener("DOMContentLoaded", () => {
   const chatForm = document.getElementById("chatForm");
   const messageInput = document.getElementById("messageInput");
   const messagesContainer = document.getElementById("messages");
   const voiceBtn = document.getElementById("voiceBtn");
+  const loader = document.getElementById("loader");
+
+  loadChatHistory();
 
   chatForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -16,13 +18,18 @@ document.addEventListener("DOMContentLoaded", () => {
     messageInput.value = "";
 
     const botBubble = addMessage("bot", "Typing...");
+    loader.classList.remove("hidden");
+
     const botResponse = await getBotResponse(userMessage);
     await simulateTyping(botBubble, botResponse);
+
+    loader.classList.add("hidden");
+    saveChatHistory();
   });
 
   function addMessage(sender, text) {
     const msg = document.createElement("div");
-    msg.className = `p-3 rounded-xl shadow max-w-[75%] ${sender === "user" ? "bg-indigo-500 text-white self-end ml-auto" : "bg-white text-gray-800 self-start"}`;
+    msg.className = `p-3 rounded-xl shadow max-w-[75%] whitespace-pre-wrap ${sender === "user" ? "bg-indigo-500 text-white self-end ml-auto" : "bg-white text-gray-800 self-start"}`;
     msg.textContent = text;
     messagesContainer.appendChild(msg);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -33,13 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res = await fetch(`${BACKEND_BASE_URL}/chat`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMessage })
       });
       const data = await res.json();
-      return data.reply || "Sorry, I couldn't understand that.";
+      return data?.reply?.trim() || "❌ No reply received from the chatbot.";
     } catch {
       return "❌ Error contacting chatbot API.";
     }
@@ -53,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 🎤 Voice Input
+  // 🎙️ Voice Input
   if ("webkitSpeechRecognition" in window) {
     const recognition = new webkitSpeechRecognition();
     recognition.lang = "en-US";
@@ -68,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const transcript = event.results[0][0].transcript;
       messageInput.value = transcript;
       voiceBtn.textContent = "🎙️";
+      chatForm.dispatchEvent(new Event("submit"));
     };
 
     recognition.onerror = () => {
@@ -77,5 +83,14 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     voiceBtn.disabled = true;
     voiceBtn.textContent = "❌ Mic";
+  }
+
+  function saveChatHistory() {
+    localStorage.setItem("chatHistory", messagesContainer.innerHTML);
+  }
+
+  function loadChatHistory() {
+    const saved = localStorage.getItem("chatHistory");
+    if (saved) messagesContainer.innerHTML = saved;
   }
 });

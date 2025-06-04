@@ -22,6 +22,10 @@ AZURE_API_KEY = os.getenv("AZURE_API_KEY")
 AZURE_ENDPOINT = os.getenv("AZURE_API_ENDPOINT")  # e.g., https://your-resource.openai.azure.com/
 AZURE_API_VERSION = os.getenv("AZURE_API_VERSION")  # e.g., 2024-05-01
 AZURE_DEPLOYMENT_ID = os.getenv("AZURE_DEPLOYMENT_ID")
+AZURE_CHAT_ENDPOINT = os.getenv("AZURE_CHAT_ENDPOINT")  # e.g., https://your-chat-resource.openai.azure.com/
+AZURE_CHAT_API_VERSION = os.getenv("AZURE_CHAT_API_VERSION")  # e.g., 2024-05-01-preview
+AZURE_CHAT_DEPLOYMENT_ID = os.getenv("AZURE_CHAT_DEPLOYMENT_ID")
+AZURE_API_KEY2 = os.getenv("AZURE_API_KEY2")
 
 
 @app.route("/", methods=["GET"])
@@ -169,6 +173,44 @@ def get_images():
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
+    
+@app.route("/chat", methods=["POST"])
+def chat_with_bot():
+    try:
+        data = request.json
+        user_message = data.get("message")
+
+        if not user_message:
+            return jsonify({"error": "Message is required"}), 400
+
+        endpoint = f"{os.getenv('AZURE_CHAT_ENDPOINT')}openai/deployments/{os.getenv('AZURE_CHAT_DEPLOYMENT_ID')}/chat/completions?api-version={os.getenv('AZURE_CHAT_API_VERSION')}"
+
+        headers = {
+            "api-key": AZURE_API_KEY2,
+            "Content-Type": "application/json"
+        }
+
+        payload = {
+            "messages": [
+                {"role": "system", "content": "You're a helpful assistant."},
+                {"role": "user", "content": user_message}
+            ],
+            "temperature": 0.7,
+            "max_tokens": 800,
+        }
+
+        response = requests.post(endpoint, headers=headers, json=payload)
+        if response.status_code == 200:
+            reply = response.json()["choices"][0]["message"]["content"]
+            return jsonify({"reply": reply}), 200
+        else:
+            print(response.text)
+            return jsonify({"error": "Azure chat failed"}), 500
+
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
 
 
 
