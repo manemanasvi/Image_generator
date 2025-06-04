@@ -1,4 +1,6 @@
-const BACKEND_BASE_URL = "https://image-generator-wc8p.onrender.com";
+// ✅ auth.js (Login logic with JWT and Username storage)
+const BACKEND_BASE_URL = window.env.BACKEND_BASE_URL;
+
 
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
   e.preventDefault();
@@ -32,20 +34,19 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     const data = await res.json();
 
     if (res.status === 200) {
+      localStorage.setItem("jwt", data.token);
+      localStorage.setItem("username", data.username);
       toast.textContent = "✅ Login successful! Redirecting...";
       toast.classList.add("text-green-400");
-      loader.classList.add("hidden");
-      setTimeout(() => window.location.href = "dashboard.html", 1000); // Change if your dashboard is a different page
+      setTimeout(() => window.location.href = "dashboard.html", 1000);
     } else {
       toast.textContent = `❌ ${data.error || "Login failed!"}`;
       toast.classList.add("text-red-500");
-      loginBtn.classList.remove("hidden");
-      loader.classList.add("hidden");
     }
-  } catch (error) {
-    console.error("Login error:", error);
-    toast.textContent = "❌ Server error! Please try again later.";
+  } catch (err) {
+    toast.textContent = "❌ Server error!";
     toast.classList.add("text-red-500");
+  } finally {
     loginBtn.classList.remove("hidden");
     loader.classList.add("hidden");
   }
@@ -80,4 +81,4 @@ function togglePassword(fieldId, btn) {
         -4.477 0-8.268-2.943-9.542-7z" />
     `;
   }
-}
+} 

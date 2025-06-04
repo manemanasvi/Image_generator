@@ -53,7 +53,8 @@
 //   }
 // });
 
-const BACKEND_BASE_URL = "https://image-generator-wc8p.onrender.com";
+const BACKEND_BASE_URL = window.env.BACKEND_BASE_URL;
+
 
 document.getElementById("registerForm").addEventListener("submit", async function (e) {
   e.preventDefault();

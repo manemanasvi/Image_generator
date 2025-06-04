@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const includeSidebar = document.getElementById("include-sidebar");
 
-  fetch("sidebar.html") // ⬅️ Adjust path based on your structure
+  fetch("sidebar.html")
     .then(res => res.text())
     .then(html => {
       includeSidebar.innerHTML = html;
 
-      // Highlight active page
+      // Highlight current page
       const current = window.location.pathname.split("/").pop();
       document.querySelectorAll(".menu-link").forEach(link => {
         if (link.getAttribute("href") === current) {
@@ -14,11 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // Logout functionality
+      // Logout function
       const logoutBtn = document.getElementById("logoutBtn");
       if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
-          localStorage.clear();
+          localStorage.removeItem("jwt");
+          localStorage.removeItem("username");
           window.location.href = "index.html";
         });
       }
