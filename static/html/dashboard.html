@@ -1,34 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>X Generator – Dashboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="dashboard.js"></script>
-  <style>
-    body {
-      background: linear-gradient(to bottom right, #e0e7ff, #c7d2fe, #a5b4fc);
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard – X Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {},
+        },
+      };
+    </script>
+    <style>
+      /* Softer, more colorful light theme background */
+      body { background-color: #f0f5ff; }
+      .dark body { background-color: #0f172a; }
+      
+      /* Base styles for the inside of all cards for consistency */
+      .card-inner {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+      }
+      .dark .card-inner {
+        background: rgba(30, 41, 59, 0.5);
+      }
+      
+      .menu-link.active { background-color: #eef2ff; color: #3730a3; }
+      .dark .menu-link.active { background-color: #3b82f6; color: #ffffff; }
+
+      #main-content-area { position: relative; overflow: hidden; z-index: 1; }
+      #main-content-area::before, #main-content-area::after {
+        content: ''; position: absolute; z-index: -1; filter: blur(100px); border-radius: 50%;
+      }
+      
+      /* More vibrant aurora colors for light theme */
+      #main-content-area::before {
+        background: radial-gradient(circle, rgba(165, 180, 252, 0.45), transparent 60%);
+        width: 400px; height: 400px; top: -150px; left: -150px;
+      }
+      #main-content-area::after {
+        background: radial-gradient(circle, rgba(196, 181, 253, 0.45), transparent 60%);
+        width: 500px; height: 500px; bottom: -200px; right: -200px;
+      }
+      .dark #main-content-area::before { background: radial-gradient(circle, rgba(79, 70, 229, 0.4), transparent 70%); }
+      .dark #main-content-area::after { background: radial-gradient(circle, rgba(168, 85, 247, 0.3), transparent 70%); }
+      
+      #notes-area { resize: none; }
+    </style>
+    <script defer src="sidebar.js"></script>
+    <script defer src="dashboard.js"></script>
 </head>
-<body class="bg-gradient-to-br from-blue-100 to-indigo-200 min-h-screen flex text-gray-800 font-sans">
+<body class="min-h-screen text-slate-800 dark:text-slate-200">
 
-  <!-- Sidebar -->
-  <div id="include-sidebar"></div>
+    <div id="include-sidebar"></div>
+    
+    <div id="main-content-area" class="pl-0 sm:pl-64">
+      <main class="flex-1 p-6 sm:p-8 min-h-screen">
+        <div class="absolute top-5 right-5 z-30">
+          <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300">
+             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m8.485-8.485h1M3.515 12.515h1m12.02 4.95l.707.707M5.757 5.757l.707.707M12 5a7 7 0 000 14 7 7 0 000-14z" /></svg>
+          </button>
+        </div>
 
-  <!-- Main Content -->
-  <main class="ml-64 w-full p-10">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold text-indigo-800">📊 Dashboard</h1>
-      <p class="text-lg font-medium text-indigo-700">
-        👋 Welcome, <span id="welcomeUser">User</span>
-      </p>
+        <header>
+            <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
+                <span id="welcomeText">Welcome Back, </span><span id="welcomeUser" class="text-indigo-500 dark:text-purple-400">User</span>
+            </h1>
+            <p class="mt-1 text-slate-500 dark:text-slate-400">Here's your creative space. Let's make something amazing today.</p>
+        </header>
+
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <div class="space-y-8">
+                <div class="p-px bg-gradient-to-br from-indigo-200 to-purple-200 rounded-xl shadow-lg">
+                    <section class="card-inner p-6 rounded-[11px] text-center h-full">
+                        <div id="date" class="text-lg font-semibold text-slate-700 dark:text-slate-200"></div>
+                        <div id="time" class="text-5xl font-bold text-slate-900 dark:text-white mt-2"></div>
+                    </section>
+                </div>
+
+                <div class="p-px bg-gradient-to-br from-indigo-200 to-purple-200 rounded-xl shadow-lg">
+                    <section class="card-inner p-6 rounded-[11px] h-full">
+                        <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Creative Spark</h3>
+                        <blockquote id="quote" class="text-slate-600 dark:text-slate-300 italic"></blockquote>
+                    </section>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 p-px bg-gradient-to-br from-indigo-200 to-purple-200 rounded-xl shadow-lg">
+                <section class="card-inner p-6 rounded-[11px] h-full flex flex-col">
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Quick Notes</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Your notes are saved automatically in your browser.</p>
+                    <textarea id="notes-area" class="w-full flex-grow p-3 bg-white/50 dark:bg-slate-800/60 rounded-lg border border-slate-300/70 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Jot down your next big idea..."></textarea>
+                </section>
+            </div>
+
+        </div>
+      </main>
     </div>
-    <p class="text-gray-700 text-base">Select an option from the menu to get started.</p>
-  </main>
 
-  <!-- Sidebar Logic -->
-  <script src="sidebar.js" defer></script>
+    <script src="env.js"></script>
+    <script>
+      function toggleDarkMode() {
+        document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
 </body>
 </html>

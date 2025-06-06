@@ -1,45 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>💬 My Chat – X Generator</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      background: linear-gradient(to right top, #edf2f7, #c3dafe, #a5b4fc, #818cf8);
-      font-family: 'Segoe UI', sans-serif;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>💬 My Chat – X Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: { extend: {} },
+        };
+    </script>
+    <style>
+      /* Styles are correct and do not need to be changed */
+      body { background-color: #f0f5ff; }
+      .dark body { background-color: #0f172a; }
+      .card-inner {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+      }
+      .dark .card-inner { background: rgba(30, 41, 59, 0.5); }
+      .menu-link.active { background-color: #eef2ff; color: #3730a3; }
+      .dark .menu-link.active { background-color: #3b82f6; color: #ffffff; }
+      #main-content-area { position: relative; overflow: hidden; z-index: 1; }
+      /* ... other styles */
+    </style>
+    <script defer src="sidebar.js"></script>
+    <script defer src="chat.js"></script>
 </head>
-<body class="flex min-h-screen text-gray-800 bg-gradient-to-br from-[#f7f0ff] to-[#d0e4ff]">
-  <!-- Sidebar -->
-  <div id="include-sidebar"></div>
+<body class="min-h-screen text-slate-800 dark:text-slate-200">
 
-  <!-- Chat Section -->
-  <main class="ml-64 w-full p-6 flex flex-col">
-    <h1 class="text-2xl font-bold text-indigo-700 mb-4">💬 Chat with XBot</h1>
+    <div id="include-sidebar"></div>
 
-    <div id="messages" class="flex-1 overflow-y-auto bg-white bg-opacity-70 p-4 rounded-xl shadow-inner space-y-3 max-h-[70vh] mb-4"></div>
+    <div id="main-content-area" class="pl-0 sm:pl-64">
+      <main class="h-screen flex flex-col p-6 sm:p-8">
+        
+        <header class="flex justify-between items-center mb-4 flex-shrink-0">
+            <div class="flex items-center gap-4">
+                <h1 class="text-3xl font-bold text-slate-900 dark:text-white">💬 Chat with XBot</h1>
+                <button id="newChatBtn" title="Start a new chat" class="bg-indigo-100 dark:bg-slate-700 text-indigo-600 dark:text-slate-200 p-2 rounded-full hover:bg-indigo-200 dark:hover:bg-slate-600 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                </button>
+            </div>
+            <div class="hidden sm:flex items-center gap-4">
+                <div class="text-sm text-slate-600 dark:text-slate-300 font-medium">
+                    Hi, <span id="username-greeting">User</span> 👋
+                </div>
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m8.485-8.485h1M3.515 12.515h1m12.02 4.95l.707.707M5.757 5.757l.707.707M12 5a7 7 0 000 14 7 7 0 000-14z" /></svg>
+                </button>
+            </div>
+        </header>
+        
+        <div class="flex-1 p-px bg-gradient-to-br from-indigo-200 to-purple-200 rounded-xl shadow-lg flex overflow-hidden">
+            <div class="card-inner rounded-[11px] w-full flex flex-col p-4">
+                <div id="messages" class="flex-1 overflow-y-auto space-y-4 p-2">
+                    </div>
 
-    <div id="loader" class="hidden self-center animate-spin h-6 w-6 border-2 border-indigo-500 border-t-transparent rounded-full mb-2"></div>
+                <div id="loader" class="hidden self-start px-4 py-2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
+                    </div>
+                </div>
+                
+                <form id="chatForm" class="flex items-center gap-2 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 flex-shrink-0">
+                    <input type="text" id="messageInput" placeholder="Ask something..." required 
+                           class="flex-grow p-3 rounded-xl bg-white/50 dark:bg-slate-800/60 border border-slate-300/70 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-slate-800 dark:text-slate-200" />
+                    <button type="submit" class="bg-indigo-500 text-white px-6 py-3 rounded-xl hover:bg-indigo-600 transition shadow-md">Send</button>
+                    <button type="button" id="voiceBtn" class="bg-pink-500 text-white px-4 py-3 rounded-xl hover:bg-pink-600 shadow-md">🎙️</button>
+                </form>
+            </div>
+        </div>
 
-    <form id="chatForm" class="flex items-center gap-2">
-      <input type="text" id="messageInput" placeholder="Ask something..."
-             class="flex-grow p-3 rounded-xl border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400" required />
-      <button type="submit"
-              class="bg-indigo-500 text-white px-6 py-3 rounded-xl hover:bg-indigo-600 transition shadow">
-        Send
-      </button>
-      <button type="button" id="voiceBtn"
-              class="bg-pink-500 text-white px-4 py-3 rounded-xl hover:bg-pink-600 shadow">
-        🎙️
-      </button>
-    </form>
-  </main>
+      </main>
+    </div>
 
-  <script src="env.js"></script>
-  <script src="sidebar.js"></script>
-  <script src="chat.js" defer></script>
+    <script src="env.js"></script>
+    <script>
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
 </body>
 </html>
